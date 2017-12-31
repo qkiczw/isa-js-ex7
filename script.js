@@ -101,7 +101,9 @@ const getAverageCompanySalary = () => {
     return getTotalCompanySalary() / company.offices.length;
 };
 
-console.log('Average salary in company: ' + getAverageCompanySalary() );
+console.log('The Average salary in company is: ' + getAverageCompanySalary() );
+
+//może z opcja szukania z tabeli gdzie znajduje pierwszego z officeid firmy
 
 // 6) Wyswietl najlepiej oplacanego pracownika w poszczeg�lnych biurach
 
@@ -109,8 +111,22 @@ const getAllWorkers = company.offices.reduce( (acc, next) => {
     return acc.concat(next.workers);
 }, []);
 
+const getWorkersByCity = (office) => {
+    const city = getCity(office).id;
+    return getAllWorkers.filter((worker) => {
+        return worker.office === city;});
+};
+
+const getBestWorkerByCity  = (office) =>{
+    console.log('Najlepszy pracownik w ', office, ' to: ', getWorkersByCity(office)[0]);
+};
+
+getBestWorkerByCity('Gdansk');
+getBestWorkerByCity('Gliwice');
+getBestWorkerByCity('Koszalin');
+getBestWorkerByCity('Poznan');
 
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
 
 const getBestWorker = getAllWorkers.sort((prev, next) => next.salary - prev.salary);
-console.log(getBestWorker[0]);
+console.log('Najlepszy pracownik całej firmy to: ', getBestWorker[0].name, ' z ', getBestWorker[0].office);
