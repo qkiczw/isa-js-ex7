@@ -68,7 +68,7 @@ console.log(getOfficeInfo('Gliwice'));
 // 2) Dodaj nowe biuro (w Poznaniu)
 
 const addOffice = (id, name, headquarter) => {
-    company.offices.push( { id:id, name: name, headquarter: headquarter, workers: []  } );
+    company.offices.push( { id:id, name: name, headquarter: headquarter, workers: [] } );
 };
 
 addOffice('PO', 'Poznan', false, );
@@ -76,7 +76,7 @@ addOffice('PO', 'Poznan', false, );
 // 3) Dodaj nowego pracownika do biura w Poznaniu: { id: 16, name: "Olek", type: "M", office: "PO", salary: 500 }
 
 const newWorker = (id, name, type, office, salary) => {
-    return {id: id, name: name, type: type, office: office, salary: salary };
+    return { id: id, name: name, type: type, office: office, salary: salary };
 };
 
 let newWorkerPoznan = newWorker(16, 'Olek', 'M', 'PO', 500);
@@ -92,24 +92,27 @@ console.log(getOfficeInfo('Poznan'));
 
 // 5) Wyswietl srednia pensje w calej firmie,
 
+const getAllWorkers = company.offices.reduce( (acc, next) => {
+    return acc.concat(next.workers);
+}, []);
+
+
 const getTotalCompanySalary  = () => {
     return getTotalSalary('Gdansk') + getTotalSalary('Gliwice') + getTotalSalary('Koszalin') +
         getTotalSalary('Poznan');
 };
 
 const getAverageCompanySalary = () => {
-    return getTotalCompanySalary() / company.offices.length;
+    return getTotalCompanySalary() / getAllWorkers.length;
 };
 
-console.log('The Average salary in company is: ' + getAverageCompanySalary() );
+console.log('Średnia pensja w firmie to: ' + getAverageCompanySalary().toFixed(2) );
 
 //może z opcja szukania z tabeli gdzie znajduje pierwszego z officeid firmy
 
 // 6) Wyswietl najlepiej oplacanego pracownika w poszczeg�lnych biurach
 
-const getAllWorkers = company.offices.reduce( (acc, next) => {
-    return acc.concat(next.workers);
-}, []);
+
 
 const getWorkersByCity = (office) => {
     const city = getCity(office).id;
@@ -129,4 +132,4 @@ getBestWorkerByCity('Poznan');
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
 
 const getBestWorker = getAllWorkers.sort((prev, next) => next.salary - prev.salary);
-console.log('Najlepszy pracownik całej firmy to: ', getBestWorker[0].name, ' z ', getBestWorker[0].office);
+console.log('Najlepiej opłacany pracownik całej firmy to: ', getBestWorker[0].name, ' z ', getBestWorker[0].office);
