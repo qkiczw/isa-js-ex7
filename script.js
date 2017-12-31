@@ -1,10 +1,10 @@
-var offices = [
+let offices = [
     { id: "GD", name: "Gdansk", headquarter: true },
     { id: "GL", name: "Gliwice" },
     { id: "KO", name: "Koszalin" }
 ];
 
-var workers = [
+let workers = [
     { id: 1,  name: "Bartek",     type: "P", office: "GD", salary: 300 },
     { id: 2,  name: "Wojtek",     type: "P", office: "GD", salary: 210 },
     { id: 3,  name: "Piotr",      type: "M", office: "GL", salary: 250 },
@@ -22,10 +22,7 @@ var workers = [
     { id: 15, name: "Magda",      type: "P", office: "KO", salary: 220 }
 ];
 
-
-
-var company = { offices: [] };
-
+const company = { offices: [] };
 
 company.offices  = offices.map( (office) => {
     return {
@@ -35,7 +32,6 @@ company.offices  = offices.map( (office) => {
         workers: workers.filter(  (worker) =>  { return worker.office.includes(office.id); } )
 }
 });
-
 
 const getTotalSalary = (city) => {
     let totalSalary = 0;
@@ -50,9 +46,7 @@ const getAverageSalary = (city) => {
     return (getTotalSalary(city) / getCity(city).workers.length).toFixed(2);
 };
 
-
-// 1) Wyswietl, informacje o biurze w Gliwicach (lokalizacja, liczba przypisanych pracownik�w,
-//     srednia pensja),
+// 1) Wyswietl, informacje o biurze w Gliwicach (lokalizacja, liczba przypisanych pracownik�w, srednia pensja),
 
 const getCity = (city) => {
     return company.offices.find( (office) => {
@@ -62,7 +56,7 @@ const getCity = (city) => {
 
 const getOfficeInfo = (city) => {
     return {
-
+        name: getCity(city).name,
         localization : getCity(city).name,
         workers: getCity(city).workers.length,
         headquarter: getCity(city).headquarter,
@@ -87,7 +81,6 @@ const newWorker = (id, name, type, office, salary) => {
 
 let newWorkerPoznan = newWorker(16, 'Olek', 'M', 'PO', 500);
 
-
 const addWorker = () => {
     company.offices[3].workers.push(newWorkerPoznan);
 };
@@ -97,16 +90,22 @@ addWorker();
 
 console.log(getOfficeInfo('Poznan'));
 
-
-
 // 5) Wyswietl srednia pensje w calej firmie,
 
+const getTotalCompanySalary  = () => {
+    return getTotalSalary('Gdansk') + getTotalSalary('Gliwice') + getTotalSalary('Koszalin') +
+        getTotalSalary('Poznan');
+};
+
+const getAverageCompanySalary = () => {
+    return getTotalCompanySalary() / company.offices.length;
+};
+
+console.log('Average salary in company: ' + getAverageCompanySalary() );
 
 // 6) Wyswietl najlepiej oplacanego pracownika w poszczeg�lnych biurach
 
 
+
+
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
-
-
-
-
