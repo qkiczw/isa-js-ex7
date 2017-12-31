@@ -106,7 +106,7 @@ console.log('Average salary in company: ' + getAverageCompanySalary() );
 // 6) Wyswietl najlepiej oplacanego pracownika w poszczeg�lnych biurach
 
 const getCompanyWorkers = company.offices.map( (office) => {
-    return office.workers.salary;
+    return office.workers;
 })
 
 
